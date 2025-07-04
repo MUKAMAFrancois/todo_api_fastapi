@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 from motor.motor_asyncio import AsyncIOMotorClient
 from dotenv import load_dotenv
-import os
+import os # for environment variables
 from contextlib import asynccontextmanager
 from fastapi.responses import HTMLResponse
-import logging
+import logging # for logging
 import pymongo.errors
 from api.routers.auth import router as auth_router
 from api.routers.tasks import router as tasks_router
