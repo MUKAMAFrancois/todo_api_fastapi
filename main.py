@@ -9,6 +9,7 @@ import pymongo.errors
 from api.routers.auth import router as auth_router
 from api.routers.tasks import router as tasks_router
 from api.dependencies.database import get_db
+from fastapi.middleware.cors import CORSMiddleware
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -23,6 +24,7 @@ DATABASE_NAME = os.getenv("DATABASE_NAME")
 
 # FastAPI app settings
 APP_NAME = os.getenv("APP_NAME")
+CLIENT_ORIGIN_URL = os.getenv("CLIENT_ORIGIN_URL", "http://localhost:3000")
 
 # Validate environment variables
 if not MONGODB_URI or not DATABASE_NAME:
@@ -59,6 +61,20 @@ app = FastAPI(
     docs_url="/docs",
     redoc_url="/redoc", 
     lifespan=lifespan
+)
+
+# CORS middleware
+# The CLIENT_ORIGIN_URL should be the URL of your frontend application
+origins = [
+    CLIENT_ORIGIN_URL,
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # include routers
