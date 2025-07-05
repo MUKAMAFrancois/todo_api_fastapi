@@ -66,7 +66,7 @@ app = FastAPI(
 # CORS middleware
 # The CLIENT_ORIGIN_URL should be the URL of your frontend application
 origins = [
-    CLIENT_ORIGIN_URL,
+    "*"
 ]
 
 app.add_middleware(
